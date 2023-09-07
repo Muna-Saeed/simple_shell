@@ -10,5 +10,6 @@
 void moon_print(const char *printf_msg);
 void render_prompt(void);
 void exec_prompt(const char *directive);
+void read_user_input(char *user_input, size_t size);
 
 #endif
