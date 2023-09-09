@@ -85,18 +85,20 @@ void exec_prompt(const char *user_input)
 
 					dir = strtok(NULL, ":");
 				}
-
-				free(path_copy);
-
-				/**
-				  * If execvp() returns, an error occurred 
-				  * printf("Command not found: %s\n", arguments[0]);
-				*/
-				perror("Error: the command was not found(execvp)");
-				exit(EXIT_FAILURE);
 			}
+
+
+
+			/**
+			 * free(path_copy);
+			 * If execvp() returns, an error occurred 
+			 * printf("Command not found: %s\n", arguments[0]);
+			 */
+			perror("Error: the command was not found(execvp)");
+			exit(EXIT_FAILURE);
 		}
 	}
+
 	else
 	{
 		wait(NULL);

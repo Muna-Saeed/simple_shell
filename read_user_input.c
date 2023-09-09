@@ -13,6 +13,7 @@ void read_user_input(char *user_input, size_t size)
 		{
 			moon_print("\n");
 		}
+		}
 		else
 		{
 			perror("Error an executable can not be found while reading user input (fgets)");
@@ -20,4 +21,3 @@ void read_user_input(char *user_input, size_t size)
 		}
 	}
 
-}
