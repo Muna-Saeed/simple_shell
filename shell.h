@@ -9,7 +9,7 @@
 #include <sys/wait.h>
 #include<stdbool.h>
 
-#define MAX_PATH_LENGTH 1024
+#define MAX_PATH_LENGTH 256
 
 void moon_print(const char *printf_msg, ...);
 void render_prompt(void);
