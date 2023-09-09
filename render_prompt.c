@@ -5,5 +5,5 @@
   */
 void render_prompt(void)
 {
-	moon_print("moon_shell$");
+	moon_print("moon_shell$ ");
 }
