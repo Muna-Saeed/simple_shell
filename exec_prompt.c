@@ -93,8 +93,9 @@ void exec_prompt(const char *user_input)
 			 * free(path_copy);
 			 * If execvp() returns, an error occurred 
 			 * printf("Command not found: %s\n", arguments[0]);
+			 * perror("Error: the command was not found(execvp)");
 			 */
-			perror("Error: the command was not found(execvp)");
+			perror("execvp");
 			exit(EXIT_FAILURE);
 		}
 	}
