@@ -11,13 +11,17 @@ void read_user_input(char *user_input, size_t size)
 	{
 		if (feof(stdin))
 		{
-			moon_print("\n");
+			exit(EXIT_SUCCESS);
+			/* moon_print("\n"); */
 		}
 		else
 		{
-			moon_print("Error an executable can not be found while reading user input");
+			perror("Error an executable can not be found while reading user input (fgets)");
 			exit(EXIT_FAILURE);
 		}
 	}
 
+	/* Remove trailing newline character */
+    user_input[strcspn(user_input, "\n")] = '\0';
 }
+
