@@ -28,14 +28,13 @@ static void initialize_buffer(char **lineptr, size_t *n)
 
 /**
  * read_data_into_buffer - Read data into the buffer if needed.
- * @n: A pointer to the size of the allocated buffer.
  * @bytes_read: A pointer to store the number of bytes read.
  *
  * Return: 1 if data was read, 0 on EOF, or -1 on error.
  *
  * This function reads data into the buffer if needed.
  */
-static int read_data_into_buffer(size_t *n, ssize_t *bytes_read)
+static int read_data_into_buffer(ssize_t *bytes_read)
 {
 	if (input_index == 0)
 	{
@@ -113,7 +112,7 @@ ssize_t moon_getline(char **lineptr, size_t *n)
 
 	while (1)
 	{
-		if (read_data_into_buffer(n, &bytes_read) == 0)
+		if (read_data_into_buffer(&bytes_read) == 0)
 		{
 			return (-1); /* EOF */
 		}
