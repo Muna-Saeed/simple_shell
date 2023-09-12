@@ -16,12 +16,12 @@ void read_user_input(char *user_input, size_t size)
 		}
 		else
 		{
-			perror("Error an executable can not be found while reading user input (fgets)");
+			perror("Error an executable can't be found while reading user (fgets)");
 			exit(EXIT_FAILURE);
 		}
 	}
 
 	/* Remove trailing newline character */
-    user_input[strcspn(user_input, "\n")] = '\0';
+	user_input[strcspn(user_input, "\n")] = '\0';
 }
 
