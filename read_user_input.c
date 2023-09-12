@@ -12,7 +12,7 @@ void read_user_input(char *user_input, size_t size)
 		if (feof(stdin))
 		{
 			exit(EXIT_SUCCESS);
-			/* moon_print("\n"); */
+			moon_print("\n");
 		}
 		else
 		{
