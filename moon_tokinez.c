@@ -18,14 +18,12 @@ char **tokenize_string(const char *input, char *separator)
 		perror("malloc");
 		exit(EXIT_FAILURE);
 	}
-
 	tokens[index] = malloc(sizeof(char) * 100);
 	if (tokens[index] == NULL)
 	{
 		perror("malloc");
 		exit(EXIT_FAILURE);
 	}
-
 	while (input[strIndex] != '\0')
 	{
 		innerIndex = 0;
@@ -48,6 +46,5 @@ char **tokenize_string(const char *input, char *separator)
 		}
 	}
 	tokens[++index] = NULL;
-
-	return tokens;
+	return (tokens);
 }
