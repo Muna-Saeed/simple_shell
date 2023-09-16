@@ -13,7 +13,7 @@ int main(void)
 {
 	char user_input[150];
 
-	while (1) // Use 1 for an infinite loop
+	while (1)
 	{
 		render_prompt();
 		read_user_input(user_input, sizeof(user_input));
