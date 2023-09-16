@@ -1,111 +1,47 @@
 #include "shell.h"
-
+#define MAX_ARGUMENTS 10
 /**
  * exec_prompt - Entry point.
  * @user_input: type const char pointer.
  * Description: this function executes the prompts.
  */
 
-extern char **environ;
-
 void exec_prompt(const char *user_input)
 {
-    pid_t pid_of_child = fork();
 
-    if (pid_of_child == -1)
-    {
-        perror("fork");
-        exit(EXIT_FAILURE);
-    }
-    else if (pid_of_child == 0)
-    {
-        /**
-         * execute child process
-         * parses the user input and its arguments
-         */
-        char *arguments[150];
-        int arguments_counter = 0;
+	/* create a child process */
+	pid_t pid_of_child = fork();
 
-        /* tokenize whatever user enters */
-        char *tokenize = strtok((char *)user_input, " ");
+	if (pid_of_child == -1)
+	{
 
-        while (tokenize != NULL)
-        {
-            arguments[arguments_counter++] = tokenize;
-            tokenize = strtok(NULL, " ");
-        }
-        arguments[arguments_counter] = NULL;
+		perror("Error: Failed to fork");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid_of_child == 0)
+	{
+		char *arguments[MAX_ARGUMENTS];
 
-        /** 
-         * Handle built-in commands
-         * if the command is "exit" and exit accordingly
-         */
+		tokenize_input(user_input, arguments, MAX_ARGUMENTS);
+		exec_builtin(arguments[0]);
 
-        if (arguments_counter == 1 && strcmp(arguments[0], "exit") == 0)
-        {
-            exit(EXIT_SUCCESS);
-        }
-        else if (strcmp(arguments[0], "env") == 0)
-        {
-            /* Handle the "env" command here */
-            char **env = environ;
+		if (!getenv_info(arguments))
+		{
+			fprintf(stderr, "Error: Executable '%s' not found\n", arguments[0]);
+			free_arguments(arguments);
+			exit(EXIT_FAILURE);
 
-            while (*env != NULL)
-            {
-                moon_print(*env);
-                env++;
-            }
-            exit(EXIT_SUCCESS);
-        }
-        else
-        {
-            /**
-             * Checks if the command contains a / character
-             * (indicating a full path)
-             */ 
-            if (strchr(arguments[0], '/') != NULL)
-            {
-                if (execvp(arguments[0], arguments) == -1)
-                {
-                    perror("execvp");
-                    exit(EXIT_FAILURE);
-                }
-            }
-            else
-            {
-                /**
-                 * The command doesn't contain a / character, so it will search for it
-                 * in the directories specified by the PATH variable
-                 */
-                char *path = getenv("PATH");
-                char *path_copy = strdup(path);
-                char *dir = strtok(path_copy, ":");
+		}
 
-                while (dir != NULL)
-                {
-                    char full_path[MAX_PATH_LENGTH];
-                    snprintf(full_path, sizeof(full_path), "%s/%s", dir, arguments[0]);
+		/* Free the dynamically allocated memory */
+		free_arguments(arguments);
+		/* Exit the child process */
+		exit(EXIT_SUCCESS);
 
-                    if (execvp(full_path, arguments) != -1)
-                    {
-                        /* Execution succeeded, no need to continue searching */
-                        break;
-                    }
-
-                    dir = strtok(NULL, ":");
-                }
-
-                /* Free the dynamically allocated memory */
-                free(path_copy);
-
-                /* If the loop completes without finding a valid executable, perror and exit */
-                perror("execvp");
-                exit(EXIT_FAILURE);
-            }
-        }
-    }
-    else
-    {
-        wait(NULL);
-    }
+	}
+	else
+	{
+		/* parent  process */
+		wait(NULL);
+	}
 }
