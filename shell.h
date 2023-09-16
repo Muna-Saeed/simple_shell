@@ -56,16 +56,17 @@ void exec_cd(const char *user_input);
 void exec_alias(const char *user_input);
 
 /* Function prototypes for getenv_info.c */
+void handle_setenv(char **arguments);
+void handle_unsetenv(char **arguments);
+void execute_command(char **arguments);
 bool getenv_info(char **arguments);
-
 /* Function prototypes for handle_other_commands.c and free_arguments.c */
 void handle_other_commands(char **arguments[]);
 void free_arguments(char **arguments);
 
 /* Function prototypes for execute_command.c and fork_child_processes.c */
-void execute_command(char *command);
 void fork_child_processes(char *commands[], int num_commands);
-
+void execute_command_2(char *command);
 /* Function prototypes for alias_builtin.c */
 void print_all_aliases(Alias *alias_list);
 void print_specific_aliases(Alias *alias_list, char* names[], int num_names);
