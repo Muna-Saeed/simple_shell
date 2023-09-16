@@ -89,7 +89,15 @@ void exec_cd(const char *user_input)
 		return;
 	}
 }
+/*void exec_cd(const char *user_input)
+  {
+  const char *path = user_input + 3;
 
+  if (chdir(path) != 0) 
+  {
+  perror("cd failed");
+  }
+  }*/
 /**
  * exec_alias - Execute alias command.
  * @user_input: The user-provided input string.
@@ -138,4 +146,24 @@ void exec_builtin(const char *user_input)
 	else if (strncmp(user_input, "alias", 5) == 0)
 		exec_alias(user_input);
 }
+/*void exec_builtin(const char *user_input)
+  {
+  if (strncmp(user_input, "exit", 4) == 0)
+  {
+  exec_exit(user_input);
+  return;
+  }
 
+  else if (strncmp(user_input, "env", 3) == 0)
+  {
+  exec_env();
+  return;
+  }
+
+  else if (strncmp(user_input, "cd", 2) == 0)
+  exec_cd(user_input);
+
+  else if (strncmp(user_input, "alias", 5) == 0)
+  exec_alias(user_input);
+  }
+ */
