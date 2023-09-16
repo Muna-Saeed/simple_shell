@@ -112,8 +112,9 @@ void exec_alias(const char *user_input)
 		aliases[num_aliases++] = token;
 		token = strtok(NULL, " ");
 	}
-	define_aliases(alias_list, num_aliases);
+	define_aliases(alias_list, aliases, num_aliases);
 }
+
 /**
  * exec_builtin - Execute built-in commands.
  * @user_input: The user-provided input string.
