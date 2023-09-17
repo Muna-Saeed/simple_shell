@@ -4,7 +4,7 @@
 #define MAX_COMMANDS 10
 
 /**
- * execute_command - Executes a command
+ * execute_command_2 - Executes a command
  * @command: The command to execute
  *
  * Description: This function Excutes a command.
@@ -71,6 +71,38 @@ void tokenize_user_input(const char *user_input, char *commands[], int *num_cd)
 	}
 }
 
+
+/**
+ * replace_variables - Replaces variables in a command
+ * @command: The command to replace variables in
+ * @exit_status: The exit status of the previous command
+ *
+ * Description: This function replaces variables in a command with their value.
+ * It handles variables like $? and $$.
+ */
+void replace_variables(char *command, int exit_status)
+{
+	char *variable = NULL;
+	char pid_str[20];
+
+	snprintf(pid_str, sizeof(pid_str), "%d", getpid());
+
+	variable = strstr(command, "$?");
+	if (variable != NULL)
+	{
+		/* Replace "$?" with the exit status */
+		snprintf(variable, 3, "%d", exit_status);
+	}
+
+	variable = strstr(command, "$$");
+	if (variable != NULL)
+	{
+		/* Replace "$$" with the process ID */
+		snprintf(variable, 20, "%s", pid_str);
+	}
+}
+
+
 /**
  * fork_child_processes - Forks a child process for each command
  * @commands: The commands to execute
@@ -82,7 +114,7 @@ void tokenize_user_input(const char *user_input, char *commands[], int *num_cd)
 void fork_child_processes(char *commands[], int num_commands)
 {
 	int i;
-
+	int exit_status = 0;
 	/* Fork a child process for each command */
 	for (i = 0; i < num_commands; i++)
 	{
@@ -95,11 +127,12 @@ void fork_child_processes(char *commands[], int num_commands)
 		}
 		else if (pid_of_child == 0)
 		{
+			replace_variables(commands[i], exit_status);
 			execute_command_2(commands[i]);
 		}
 		else
 		{
-			wait(NULL);
+			wait(&exit_status);
 		}
 	}
 }

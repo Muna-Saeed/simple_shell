@@ -13,8 +13,7 @@ void read_user_input(char *user_input, size_t size)
 		{
 			moon_print("\n");
 			exit(EXIT_SUCCESS);
-			moon_print("\n");
-		}
+				}
 		else
 		{
 			perror("Error an executable can't be found while reading user (fgets)");

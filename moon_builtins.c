@@ -3,7 +3,7 @@
 #define MAX_ARGUMENTS 100
 
 /**
- * exec_exit - Execute exit command.
+ *  exec_exit - Execute exit command.
  * @user_input: The user-provided input string.
  *
  * Description: This function handles the "exit" command. It exits the shell
@@ -89,15 +89,16 @@ void exec_cd(const char *user_input)
 		return;
 	}
 }
-/*void exec_cd(const char *user_input)
-  {
-  const char *path = user_input + 3;
-
-  if (chdir(path) != 0) 
-  {
-  perror("cd failed");
-  }
-  }*/
+/**
+ * void exec_cd(const char *user_input)
+ * {
+ * const char *path = user_input + 3;
+ * if (chdir(path) != 0)
+ * {
+ * perror("cd failed");
+ * }
+ * }
+*/
 /**
  * exec_alias - Execute alias command.
  * @user_input: The user-provided input string.

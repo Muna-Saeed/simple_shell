@@ -103,14 +103,17 @@ bool getenv_info(char **arguments)
 		handle_setenv(arguments);
 		return (true);
 	}
-
 	/* Handle unsetenv command */
 	else if (strcmp(arguments[0], "unsetenv") == 0)
 	{
 		handle_unsetenv(arguments);
 		return (true);
 	}
-
+	/* Skips processing if the command is a comment */
+	else if (arguments[0][0] == '#')
+	{
+		return (true);
+	}
 	/**
 	 * Checks if the command contains a / character
 	 * (indicating the command includes a path, a full path)
@@ -122,10 +125,8 @@ bool getenv_info(char **arguments)
 			perror("execve");
 			exit(EXIT_FAILURE);
 		}
-
 		return (true);
 	}
-
 	/**
 	 * The command doesn't contain a / character, so it will search for it
 	 * in the directories specified by the PATH variable
@@ -135,7 +136,6 @@ bool getenv_info(char **arguments)
 		execute_command(arguments);
 		return (true);
 	}
-
 	return (false);
 }
 

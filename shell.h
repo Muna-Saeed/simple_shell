@@ -43,7 +43,7 @@ void read_user_input(char *user_input, size_t size);
 /* Function prototypes for moon_getline.c */
 ssize_t moon_getline(char **lineptr, size_t *n);
 
-/* Function prototypes for input_tokinez.c and moon_tokinez.c */
+/* Function prototypes for input_tokenizer.c and moon_tokenizer.c */
 void tokenize_input(const char *user_input, char **arguments,
 		int max_argument);
 void tokenize_user_input(const char *user_input, char *commands[], int *num_cd);
@@ -60,11 +60,11 @@ void handle_setenv(char **arguments);
 void handle_unsetenv(char **arguments);
 void execute_command(char **arguments);
 bool getenv_info(char **arguments);
-/* Function prototypes for handle_other_commands.c and free_arguments.c */
+/* Function prototypes for handle_other_commands and free_arguments */
 void handle_other_commands(char **arguments[]);
 void free_arguments(char **arguments);
 
-/* Function prototypes for execute_command.c and fork_child_processes.c */
+/* Function prototypes for ork_child_processes and execute_command_2*/
 void fork_child_processes(char *commands[], int num_commands);
 void execute_command_2(char *command);
 /* Function prototypes for alias_builtin.c */
@@ -72,6 +72,10 @@ void print_all_aliases(Alias *alias_list);
 void print_specific_aliases(Alias *alias_list, char* names[], int num_names);
 void define_aliases(Alias **alias_list, char *args[], int num_args);
 void free_alias_list(Alias **alias_list);
+/* Function prototypes for replace_variables */
+void replace_variables(char *command, int exit_status);
+/* File input function prototype */
+void execute_commands_from_file(const char *filename);
 
 #endif /* SHELL_H_ */
 
