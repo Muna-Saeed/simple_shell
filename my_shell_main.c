@@ -56,6 +56,8 @@ int main(int argc, char *argv[])
 			if (!isatty(STDIN_FILENO) == 0)
 				render_prompt();
 			read_user_input(user_input, sizeof(user_input));
+			if (strncmp(user_input, "exit", 4) == 0)
+				exec_exit(user_input);
 			exec_prompt(user_input);
 		}
 	}
