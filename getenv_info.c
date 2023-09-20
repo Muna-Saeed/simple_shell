@@ -72,11 +72,12 @@ void execute_command(char **arguments)
 		snprintf(full_path, sizeof(full_path), "%s/%s", dir, arguments[0]);
 
 		/* Try to execute the command in each directory */
-		if (execve(full_path, arguments, NULL) != -1)
+		if (access(full_path, X_OK) == 0)
 		{
 			/* Execution succeeded, no need to continue searching */
-			free(path_copy);
-			return;
+			execve(full_path, arguments, NULL);
+			perror("execve");
+			exit(EXIT_FAILURE);
 		}
 		dir = strtok(NULL, ":");
 	}
@@ -84,7 +85,7 @@ void execute_command(char **arguments)
 	/* Free the dynamically allocated memory */
 	free(path_copy);
 
-	perror("execve");
+	fprintf(stderr, "%s: not found \n", arguments[0]);
 	exit(EXIT_FAILURE);
 }
 
@@ -93,7 +94,7 @@ void execute_command(char **arguments)
  * @arguments: The command and its arguments
  *
  * Return: true if it successfully handles a "setenv" or "unsetenv" command
- *	or executes a command, false otherwise.
+ *        or executes a command, false otherwise.
  */
 bool getenv_info(char **arguments)
 {
@@ -120,11 +121,7 @@ bool getenv_info(char **arguments)
 	 */
 	else if (strchr(arguments[0], '/') != NULL)
 	{
-		if (execve(arguments[0], arguments, NULL) == -1)
-		{
-			perror("execve");
-			exit(EXIT_FAILURE);
-		}
+		fprintf(stderr, "%s: not found \n", arguments[0]);
 		return (true);
 	}
 	/**
@@ -138,4 +135,3 @@ bool getenv_info(char **arguments)
 	}
 	return (false);
 }
-
