@@ -53,7 +53,8 @@ int main(int argc, char *argv[])
 
 		while (1)
 		{
-			render_prompt();
+			if (!isatty(STDIN_FILENO) == 0)
+				render_prompt();
 			read_user_input(user_input, sizeof(user_input));
 			exec_prompt(user_input);
 		}
